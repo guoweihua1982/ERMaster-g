@@ -171,13 +171,6 @@ public abstract class AbstractWordDialog extends AbstractDialog {
 
 			CompositeFactory.filler(composite, 1);
 
-			childComposite = CompositeFactory.createChildComposite(composite,
-					5, 3);
-			CompositeFactory.createLabel(childComposite,
-					"label.column.type.enum.set", 1, -1, true, true);
-			this.argsText = CompositeFactory.createText(this, childComposite,
-					null, 1, false, false);
-			this.argsText.setEnabled(false);
 		}
 
 		if (OracleDBManager.ID.equals(this.diagram.getDatabase())) {
@@ -195,6 +188,14 @@ public abstract class AbstractWordDialog extends AbstractDialog {
 					childComposite, "label.column.char");
 			this.charSemanticsRadio.setEnabled(false);
 		}
+
+		Composite childComposite = CompositeFactory.createChildComposite(composite,
+				5, 3);
+		CompositeFactory.createLabel(childComposite,
+				"label.column.type.args", 1, -1, true, true);
+		this.argsText = CompositeFactory.createText(this, childComposite,
+				null, 1, false, false);
+		this.argsText.setEnabled(false);
 
 		this.descriptionText = CompositeFactory.createTextArea(this, composite,
 				"label.column.description", -1, 100, numColumns - 1, true);
