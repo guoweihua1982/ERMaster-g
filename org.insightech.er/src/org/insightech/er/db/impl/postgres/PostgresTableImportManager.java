@@ -3,7 +3,10 @@ package org.insightech.er.db.impl.postgres;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.insightech.er.db.sqltype.SqlType;
 import org.insightech.er.editor.model.dbimport.ImportFromDBManagerEclipseBase;
 
 public class PostgresTableImportManager extends ImportFromDBManagerEclipseBase {
@@ -59,6 +62,22 @@ public class PostgresTableImportManager extends ImportFromDBManagerEclipseBase {
 
 			columnData.type = restrictType;
 			columnData.decimalDegits = 0;
+		}
+
+		SqlType sqlType = SqlType.valueOfId(columnData.type);
+
+		if (sqlType != null && sqlType.doesNeedArgs()) {
+			String restrictType = this.getFormatType(tableName, schema, columnData);
+			if (restrictType == null || "".equals(restrictType)) {
+				columnData.enumData = "";
+			} else {
+				Pattern p = Pattern.compile(columnData.type.toLowerCase() + "\\((.*)\\)");
+				Matcher m = p.matcher(restrictType);
+
+				if (m.matches()) {
+					columnData.enumData = m.group(1);
+				}
+			}
 		}
 	}
 
@@ -156,5 +175,38 @@ public class PostgresTableImportManager extends ImportFromDBManagerEclipseBase {
 		}
 
 		return type;
+	}
+
+	private String getFormatType(String tableName, String schema, ColumnData columnData) throws SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = con.prepareStatement("select format_type(atttypid, atttypmod) from pg_attribute"
+					+ " inner join pg_stat_user_tables "
+					+ " on pg_stat_user_tables.relid = pg_attribute.attrelid "
+					+ " where pg_stat_user_tables.relname = ? "
+					+ " and pg_stat_user_tables.schemaname=? "
+					+ " and pg_attribute.attname = ?");
+
+			ps.setString(1, tableName);
+			ps.setString(2, schema);
+			ps.setString(3, columnData.columnName);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getString(1);
+			}
+
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (ps != null) {
+				ps.close();
+			}
+		}
+
+		return null;
 	}
 }
