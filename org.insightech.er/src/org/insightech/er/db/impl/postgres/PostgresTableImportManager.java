@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import org.insightech.er.db.sqltype.SqlType;
 import org.insightech.er.editor.model.dbimport.ImportFromDBManagerEclipseBase;
+import org.insightech.er.util.Check;
 
 public class PostgresTableImportManager extends ImportFromDBManagerEclipseBase {
 
@@ -68,7 +69,7 @@ public class PostgresTableImportManager extends ImportFromDBManagerEclipseBase {
 
 		if (sqlType != null && sqlType.doesNeedArgs()) {
 			String restrictType = this.getFormatType(tableName, schema, columnData);
-			if (restrictType == null || "".equals(restrictType)) {
+			if (Check.isEmpty(restrictType)) {
 				columnData.enumData = "";
 			} else {
 				Pattern p = Pattern.compile(columnData.type.toLowerCase() + "\\((.*)\\)");
