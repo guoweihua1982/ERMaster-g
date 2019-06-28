@@ -29,7 +29,7 @@ public class TableTest {
 	private void initialize(Composite parent) {
 		List<TestData> testDataList = new ArrayList<TestData>();
 		TestDataManageDialog dialog = new TestDataManageDialog(shell,
-				new ERDiagram(MySQLDBManager.ID), testDataList);
+				new ERDiagram(MySQLDBManager.ID,null), testDataList);
 
 		dialog.open();
 	}

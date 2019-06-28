@@ -147,7 +147,7 @@ public class MySQLAdvancedComposite extends AdvancedComposite {
 				SqlType type = primaryKey.getType();
 
 				if (type != null && type.isFullTextIndexable()
-						&& !type.isNeedLength(this.diagram.getDatabase())) {
+						&& !type.isNeedLength(this.diagram.getDatabase(), this.diagram.getCustomTypes())) {
 					if (length == null || length == 0) {
 						throw new InputException(
 								"error.primary.key.length.empty");

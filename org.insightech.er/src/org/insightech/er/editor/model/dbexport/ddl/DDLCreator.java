@@ -86,7 +86,7 @@ public abstract class DDLCreator {
 		}
 
 		ddl.append(LF());
-		
+
 		return ddl.toString();
 	}
 
@@ -268,9 +268,9 @@ public abstract class DDLCreator {
 		if (this.ddlTarget.createComment) {
 			ddl.append(this.getCreateComment(diagram));
 		}
-		
+
 		ddl.append(LF());
-		
+
 		return ddl.toString();
 	}
 
@@ -442,7 +442,7 @@ public abstract class DDLCreator {
 
 		List<String> autoSequenceNames = diagram.getDiagramContents()
 				.getContents().getTableSet()
-				.getAutoSequenceNames(diagram.getDatabase());
+				.getAutoSequenceNames(diagram.getDatabase(), diagram.getCustomTypes());
 
 		for (Sequence sequence : diagram.getDiagramContents().getSequenceSet()) {
 			String sequenceName = this.getNameWithSchema(sequence.getSchema(),
@@ -633,10 +633,10 @@ public abstract class DDLCreator {
 
 			ddl.append(")");
 		}
-		
+
 		return ddl.toString();
 	}
-	
+
 	protected String getPrimaryKeyLength(ERTable table, NormalColumn primaryKey) {
 		return "";
 	}
@@ -664,7 +664,7 @@ public abstract class DDLCreator {
 		ddl.append(" ");
 
 		ddl.append(filter(Format.formatType(normalColumn.getType(),
-				normalColumn.getTypeData(), diagram.getDatabase(), true)));
+				normalColumn.getTypeData(), diagram.getDatabase(), diagram.getCustomTypes(), true)));
 
 		if (!Check.isEmpty(normalColumn.getDefaultValue())) {
 			String defaultValue = normalColumn.getDefaultValue();

@@ -42,7 +42,7 @@ public class ChangeTrackingList implements Serializable {
 		this.updatedNodeElements.clear();
 		this.removedNodeElements.clear();
 	}
-	
+
 	public void addChangeTracking(ChangeTracking changeTracking) {
 		this.changeTrackingList.add(changeTracking);
 	}

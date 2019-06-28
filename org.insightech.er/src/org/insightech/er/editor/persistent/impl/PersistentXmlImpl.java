@@ -625,6 +625,13 @@ public class PersistentXmlImpl extends Persistent {
 
 		xml.append("\t<database>").append(escape(settings.getDatabase()))
 				.append("</database>\n");
+
+		xml.append("\t<custom_type>\n");
+		for (String type : settings.getCustomTypes()) {
+			xml.append("\t\t<type>").append(type).append("</type>\n");
+		}
+		xml.append("\t</custom_type>\n");
+
 		xml.append("\t<capital>").append(settings.isCapital())
 				.append("</capital>\n");
 		xml.append("\t<table_style>").append(escape(settings.getTableStyle()))

@@ -1,10 +1,13 @@
 package org.insightech.er.editor.view.dialog.option.tab;
 
+import java.util.Arrays;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.ui.PlatformUI;
@@ -15,10 +18,13 @@ import org.insightech.er.common.widgets.CompositeFactory;
 import org.insightech.er.db.DBManagerFactory;
 import org.insightech.er.editor.model.settings.Settings;
 import org.insightech.er.editor.view.dialog.option.OptionSettingDialog;
+import org.insightech.er.preference.PreferenceInitializer;
 
 public class DBSelectTabWrapper extends ValidatableTabWrapper {
 
 	private Combo databaseCombo;
+
+	private List customTypeList;
 
 	private Settings settings;
 
@@ -47,6 +53,11 @@ public class DBSelectTabWrapper extends ValidatableTabWrapper {
 		}
 
 		this.databaseCombo.setFocus();
+
+		this.customTypeList = CompositeFactory.createList(null, this, "label.custom.type", 10);
+		for (String type : PreferenceInitializer.getAllExcelTypeFiles()) {
+			this.customTypeList.add(type);
+		}
 	}
 
 	@Override
@@ -74,8 +85,18 @@ public class DBSelectTabWrapper extends ValidatableTabWrapper {
 				break;
 			}
 		}
-	}
 
+		String[] customTypes = this.settings.getCustomTypes();
+		if (customTypes != null) {
+			java.util.List<String> typeList = Arrays.asList(customTypes);
+			for (int i = 0; i < this.customTypeList.getItemCount(); i++) {
+				String customType = this.customTypeList.getItem(i);
+				if(typeList.contains(customType)) {
+					this.customTypeList.select(i);
+				}
+			}
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 */
@@ -111,5 +132,7 @@ public class DBSelectTabWrapper extends ValidatableTabWrapper {
 
 	@Override
 	public void perfomeOK() {
+		String[] newTypes = this.customTypeList.getSelection();
+		this.settings.setCustomTypes(newTypes);
 	}
 }

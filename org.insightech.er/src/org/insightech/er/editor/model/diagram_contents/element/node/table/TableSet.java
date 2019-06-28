@@ -71,7 +71,7 @@ public class TableSet extends AbstractModel implements ObjectListModel,
 		return tableSet;
 	}
 
-	public List<String> getAutoSequenceNames(String database) {
+	public List<String> getAutoSequenceNames(String database, String[] customTypes) {
 		List<String> autoSequenceNames = new ArrayList<String>();
 
 		for (ERTable table : this.tableList) {
@@ -80,9 +80,9 @@ public class TableSet extends AbstractModel implements ObjectListModel,
 			for (NormalColumn column : table.getNormalColumns()) {
 				SqlType sqlType = column.getType();
 
-				if (SqlType.valueOfId(SqlType.SQL_TYPE_ID_SERIAL).equals(
+				if (SqlType.valueOfId(SqlType.SQL_TYPE_ID_SERIAL, database, customTypes).equals(
 						sqlType)
-						|| SqlType.valueOfId(SqlType.SQL_TYPE_ID_BIG_SERIAL)
+						|| SqlType.valueOfId(SqlType.SQL_TYPE_ID_BIG_SERIAL, database, customTypes)
 								.equals(sqlType)) {
 					autoSequenceNames
 							.add((prefix + column.getPhysicalName() + "_seq")

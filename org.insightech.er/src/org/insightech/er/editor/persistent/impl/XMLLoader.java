@@ -460,8 +460,9 @@ public class XMLLoader {
 	private void load(Element root) {
 		Element settings = this.getElement(root, "settings");
 		this.database = this.loadDatabase(settings);
+		String[] customTypes = this.loadCustomTypes(settings);
 
-		this.diagram = new ERDiagram(this.database);
+		this.diagram = new ERDiagram(this.database, customTypes);
 
 		this.loadDBSetting(this.diagram, root);
 		this.loadPageSetting(this.diagram, root);
@@ -496,6 +497,15 @@ public class XMLLoader {
 		}
 
 		return database;
+	}
+
+	private String[] loadCustomTypes(Element settingsElement) {
+		Element customTypeElement = this.getElement(settingsElement, "custom_type");
+
+		if (customTypeElement != null) {
+			return this.getTagValues(customTypeElement, "type");
+		}
+		return null;
 	}
 
 	private void loadDiagramContents(DiagramContents diagramContents,
@@ -946,9 +956,9 @@ public class XMLLoader {
 
 		Word word = new Word(Format.null2blank(this.getStringValue(element,
 				"physical_name")), Format.null2blank(this.getStringValue(
-				element, "logical_name")), SqlType.valueOfId(type), typeData,
+				element, "logical_name")), SqlType.valueOfId(type, this.diagram.getDatabase(), this.diagram.getCustomTypes()), typeData,
 				Format.null2blank(this.getStringValue(element, "description")),
-				this.database);
+				this.database, this.diagram.getCustomTypes());
 
 		context.wordMap.put(id, word);
 
@@ -1005,9 +1015,9 @@ public class XMLLoader {
 		if (word == null) {
 			word = new Word(this.getStringValue(element, "physical_name"),
 					this.getStringValue(element, "logical_name"),
-					SqlType.valueOfId(type), new TypeData(null, null, false,
+					SqlType.valueOfId(type, this.diagram.getDatabase(), this.diagram.getCustomTypes()), new TypeData(null, null, false,
 							null, false, false, false, null, false),
-					this.getStringValue(element, "description"), database);
+					this.getStringValue(element, "description"), database, this.diagram.getCustomTypes());
 
 			word = context.uniqueWordDictionary.getUniqueWord(word);
 		}

@@ -71,7 +71,7 @@ public abstract class ImportFromDBManagerBase implements ImportFromDBManager {
 
 	protected DBSetting dbSetting;
 
-	private ERDiagram diagram;
+	protected ERDiagram diagram;
 
 	private List<DBObject> dbObjectList;
 
@@ -825,7 +825,7 @@ public abstract class ImportFromDBManagerBase implements ImportFromDBManager {
 			Integer length = new Integer(size);
 			Integer decimal = new Integer(decimalDegits);
 
-			SqlType sqlType = SqlType.valueOf(this.dbSetting.getDbsystem(),
+			SqlType sqlType = SqlType.valueOf(this.dbSetting.getDbsystem(),this.diagram.getCustomTypes(),
 					type, size, decimal);
 
 			if (sqlType == null || LOG_SQL_TYPE) {
@@ -880,7 +880,7 @@ public abstract class ImportFromDBManagerBase implements ImportFromDBManager {
 					args, columnData.charSemantics);
 
 			Word word = new Word(columnName, logicalName, sqlType, typeData,
-					description, this.diagram.getDatabase());
+					description, this.diagram.getDatabase(), this.diagram.getCustomTypes());
 			word = this.dictionary.getUniqueWord(word);
 
 			// TODO UNIQUE KEY
@@ -1528,7 +1528,7 @@ public abstract class ImportFromDBManagerBase implements ImportFromDBManager {
 			word = new Word(columnAlias,
 					this.translationResources.translate(columnAlias), null,
 					new TypeData(null, null, false, null, false, false, false,
-							null, false), null, null);
+							null, false), null, null, null);
 
 		}
 

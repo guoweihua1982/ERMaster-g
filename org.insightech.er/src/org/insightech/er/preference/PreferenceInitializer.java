@@ -25,9 +25,13 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
 	public static final String TEMPLATE_FILE_LIST = "template_file_list";
 
+	public static final String TYPE_FILE_LIST = "type_file_list";
+
 	public static final String TRANSLATION_FILE_LIST = "translation_file_list";
 
 	private static final String TEMPLATE_DIR = "template";
+
+	private static final String TYPE_DIR = "type";
 
 	private static final String TRANSLATION_DIR = "translation";
 
@@ -76,6 +80,13 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		return path;
 	}
 
+	public static String getTypePath(String fileName) {
+		IPath dataLocation = ERDiagramActivator.getDefault().getStateLocation();
+		String path = dataLocation.append(PreferenceInitializer.TYPE_DIR)
+				.append(fileName).toOSString();
+
+		return path;
+	}
 	public static String getExtendedClasspath() {
 		IPreferenceStore store = ERDiagramActivator.getDefault()
 				.getPreferenceStore();
@@ -354,6 +365,13 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	public static List<String> getAllExcelTemplateFiles() {
 		String str = ERDiagramActivator.getDefault().getPreferenceStore()
 				.getString(PreferenceInitializer.TEMPLATE_FILE_LIST);
+
+		return parseStringToList(str);
+	}
+
+	public static List<String> getAllExcelTypeFiles() {
+		String str = ERDiagramActivator.getDefault().getPreferenceStore()
+				.getString(PreferenceInitializer.TYPE_FILE_LIST);
 
 		return parseStringToList(str);
 	}

@@ -135,7 +135,7 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 
 	/**
 	 * This method initializes composite2
-	 * 
+	 *
 	 */
 	private void createTable(Composite composite) {
 		GridData tableGridData = new GridData();
@@ -250,9 +250,10 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 		SqlType sqlType = targetColumn.getType();
 
 		String database = this.diagram.getDatabase();
+		String[] customTypes = this.diagram.getCustomTypes();
 
-		if (sqlType != null && sqlType.getAlias(database) != null) {
-			typeCombo.setText(sqlType.getAlias(database));
+		if (sqlType != null && sqlType.getAlias(database, customTypes) != null) {
+			typeCombo.setText(sqlType.getAlias(database, customTypes));
 		}
 
 		return typeCombo;
@@ -264,8 +265,9 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 		combo.add("");
 
 		String database = this.diagram.getDatabase();
+		String[] customTypes = this.diagram.getCustomTypes();
 
-		for (String alias : SqlType.getAliasList(database)) {
+		for (String alias : SqlType.getAliasList(database, customTypes)) {
 			combo.add(alias);
 		}
 	}
@@ -393,9 +395,10 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 
 			if (sqlType != null) {
 				String database = this.diagram.getDatabase();
+				String[] customTypes = this.diagram.getCustomTypes();
 
-				if (sqlType.getAlias(database) != null) {
-					tableItem.setText(colCount, sqlType.getAlias(database));
+				if (sqlType.getAlias(database, customTypes) != null) {
+					tableItem.setText(colCount, sqlType.getAlias(database, customTypes));
 				} else {
 					tableItem.setText(colCount, "");
 				}
@@ -565,6 +568,7 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 			NormalColumn targetColumn = (NormalColumn) column;
 
 			String database = this.diagram.getDatabase();
+			String[] customTypes = this.diagram.getCustomTypes();
 
 			if (xy.x == 4) {
 				if (targetColumn.isForeignKey()) {
@@ -581,7 +585,7 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 					return null;
 				}
 				if (targetColumn.getType() != null
-						&& targetColumn.getType().isNeedLength(database)) {
+						&& targetColumn.getType().isNeedLength(database, customTypes)) {
 					return new Text(this.attributeTable, SWT.BORDER | SWT.RIGHT);
 				}
 			}
@@ -590,7 +594,7 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 					return null;
 				}
 				if (targetColumn.getType() != null
-						&& targetColumn.getType().isNeedDecimal(database)) {
+						&& targetColumn.getType().isNeedDecimal(database, customTypes)) {
 					return new Text(this.attributeTable, SWT.BORDER | SWT.RIGHT);
 				}
 			}
@@ -619,6 +623,7 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 			NormalColumn targetColumn = (NormalColumn) column;
 
 			String database = this.diagram.getDatabase();
+			String[] customTypes = this.diagram.getCustomTypes();
 
 			Word word = targetColumn.getWord();
 
@@ -683,9 +688,9 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 						return;
 					}
 
-					SqlType selectedType = SqlType.valueOf(database,
+					SqlType selectedType = SqlType.valueOf(database, customTypes,
 							((Combo) control).getText());
-					word.setType(selectedType, word.getTypeData(), database);
+					word.setType(selectedType, word.getTypeData(), database, customTypes);
 
 				} else if (xy.x == 6) {
 					if (targetColumn.isForeignKey()) {
@@ -712,7 +717,7 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 											.isZerofill(), oldTypeData
 											.isBinary(), oldTypeData.getArgs(), oldTypeData.isCharSemantics());
 
-							word.setType(word.getType(), newTypeData, database);
+							word.setType(word.getType(), newTypeData, database, customTypes);
 						}
 
 					} catch (NumberFormatException e) {
@@ -746,7 +751,7 @@ public class EditAllAttributesDialog extends AbstractDialog implements
 									oldTypeData.getArgs(),
 									oldTypeData.isCharSemantics());
 
-							word.setType(word.getType(), newTypeData, database);
+							word.setType(word.getType(), newTypeData, database, customTypes);
 						}
 
 					} catch (NumberFormatException e) {

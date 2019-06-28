@@ -126,7 +126,7 @@ public abstract class AbstractRealColumnDialog extends AbstractColumnDialog {
 	protected void setEnabledBySqlType() {
 		super.setEnabledBySqlType();
 
-		SqlType selectedType = SqlType.valueOf(diagram.getDatabase(),
+		SqlType selectedType = SqlType.valueOf(diagram.getDatabase(), this.diagram.getCustomTypes(),
 				typeCombo.getText());
 
 		if (selectedType != null) {

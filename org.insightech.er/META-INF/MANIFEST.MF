@@ -25,7 +25,8 @@ Bundle-ClassPath: .,
  resources/,
  template/,
  icons/,
- images/
+ images/,
+ type/
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Eclipse-LazyStart: true
 Bundle-Vendor: Insightech.org

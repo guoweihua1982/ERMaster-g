@@ -227,7 +227,7 @@ public class ColumnDialog extends AbstractRealColumnDialog {
 	protected void setEnabledBySqlType() {
 		super.setEnabledBySqlType();
 
-		SqlType selectedType = SqlType.valueOf(diagram.getDatabase(),
+		SqlType selectedType = SqlType.valueOf(diagram.getDatabase(), this.diagram.getCustomTypes(),
 				typeCombo.getText());
 
 		if (selectedType != null) {
@@ -274,7 +274,7 @@ public class ColumnDialog extends AbstractRealColumnDialog {
 	protected String getErrorMessage() {
 		if (this.autoIncrementCheck != null
 				&& this.autoIncrementCheck.getSelection()) {
-			SqlType selectedType = SqlType.valueOf(this.diagram.getDatabase(),
+			SqlType selectedType = SqlType.valueOf(this.diagram.getDatabase(), this.diagram.getCustomTypes(),
 					this.typeCombo.getText());
 			if (selectedType == null || !selectedType.isNumber()) {
 				return "error.no.auto.increment.column";

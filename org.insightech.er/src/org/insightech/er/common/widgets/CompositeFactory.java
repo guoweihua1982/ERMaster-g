@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Table;
@@ -215,6 +216,76 @@ public class CompositeFactory {
 
 		return combo;
 	}
+
+	public static List createList(AbstractDialog dialog, Composite composite, String title, int items) {
+		return createList(dialog, composite, title, 1, -1, items);
+	}
+
+	public static List createList(AbstractDialog dialog, Composite composite, String title, int span, int width,
+			int items) {
+		GridData gridData = new GridData();
+		gridData.horizontalSpan = span;
+		gridData.verticalAlignment = SWT.TOP;
+		gridData.horizontalAlignment = SWT.LEFT;
+		if (title != null) {
+			gridData.horizontalIndent = Resources.INDENT;
+
+			Label label = new Label(composite, SWT.LEFT);
+
+			GridData labelGridData = new GridData();
+			labelGridData.horizontalAlignment = SWT.LEFT;
+			label.setLayoutData(labelGridData);
+			label.setText(ResourceString.getResourceString(title));
+		}
+
+		if (width > 0) {
+			gridData.widthHint = width;
+
+		} else {
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
+		}
+
+		List list = new List(composite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		gridData.heightHint = items * list.getItemHeight();
+		list.setLayoutData(gridData);
+
+		ListenerAppender.addListListener(list, dialog, false);
+		return list;
+	}
+
+	public static Combo createReadOnlyCombo1(AbstractDialog dialog,
+			Composite composite, String title, int span, int width) {
+		GridData gridData = new GridData();
+		gridData.horizontalSpan = span;
+
+		if (title != null) {
+			gridData.horizontalIndent = Resources.INDENT;
+
+			Label label = new Label(composite, SWT.LEFT);
+
+			GridData labelGridData = new GridData();
+			labelGridData.horizontalAlignment = SWT.LEFT;
+			label.setLayoutData(labelGridData);
+			label.setText(ResourceString.getResourceString(title));
+		}
+
+		if (width > 0) {
+			gridData.widthHint = width;
+
+		} else {
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
+		}
+
+		Combo combo = new Combo(composite, SWT.READ_ONLY);
+		combo.setLayoutData(gridData);
+
+		ListenerAppender.addComboListener(combo, dialog, false);
+
+		return combo;
+	}
+
 
 	public static Combo createFileEncodingCombo(String defaultCharset,
 			AbstractDialog dialog, Composite composite, String title, int span) {

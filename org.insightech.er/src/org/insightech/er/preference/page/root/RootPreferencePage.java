@@ -49,7 +49,7 @@ public class RootPreferencePage extends PreferencePage implements
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				GroupSet columnGroups = GlobalGroupSet.load();
-				ERDiagram diagram = new ERDiagram(columnGroups.getDatabase());
+				ERDiagram diagram = new ERDiagram(columnGroups.getDatabase(),null);
 
 				GroupManageDialog dialog = new GroupManageDialog(PlatformUI
 						.getWorkbench().getActiveWorkbenchWindow().getShell(),

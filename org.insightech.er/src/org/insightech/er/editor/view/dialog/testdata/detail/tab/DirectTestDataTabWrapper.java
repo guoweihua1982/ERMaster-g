@@ -145,7 +145,7 @@ public class DirectTestDataTabWrapper extends ValidatableTabWrapper {
 			} else {
 				type = Format.formatType(normalColumn.getType(), normalColumn
 						.getTypeData(), this.dialog.getDiagram().getDatabase(),
-						true);
+						this.dialog.getDiagram().getCustomTypes(), true);
 			}
 
 			this.editColumnTable.addColumnHeader(name + "\r\n" + type, 100);

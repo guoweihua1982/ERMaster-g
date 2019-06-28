@@ -52,9 +52,10 @@ public class ERDiagram extends ViewableModel {
 
 	public Point mousePoint = new Point();
 
-	public ERDiagram(String database) {
+	public ERDiagram(String database,String[] customTypes) {
 		this.diagramContents = new DiagramContents();
 		this.diagramContents.getSettings().setDatabase(database);
+		this.diagramContents.getSettings().setCustomTypes(customTypes);
 		this.pageSetting = new PageSetting();
 
 		this.setDefaultColor(128, 128, 192);
@@ -130,6 +131,11 @@ public class ERDiagram extends ViewableModel {
 
 	public String getDatabase() {
 		return this.getDiagramContents().getSettings().getDatabase();
+	}
+
+
+	public String[] getCustomTypes() {
+		return this.getDiagramContents().getSettings().getCustomTypes();
 	}
 
 	public void setSettings(Settings settings) {

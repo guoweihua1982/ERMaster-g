@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.insightech.er.db.sqltype.SqlType;
+import org.insightech.er.editor.model.ERDiagram;
 import org.insightech.er.editor.model.diagram_contents.element.connection.Relation;
 import org.insightech.er.editor.model.diagram_contents.element.node.table.ERTable;
 import org.insightech.er.editor.model.diagram_contents.not_element.dictionary.TypeData;
@@ -83,7 +84,7 @@ public class NormalColumn extends Column {
 
 	/**
 	 * 外部キーを作成します
-	 * 
+	 *
 	 * @param from
 	 * @param referencedColumn
 	 * @param relation
@@ -198,17 +199,25 @@ public class NormalColumn extends Column {
 		if (this.getFirstReferencedColumn() != null) {
 			SqlType type = this.getFirstReferencedColumn().getType();
 
-			if (SqlType.valueOfId(SqlType.SQL_TYPE_ID_SERIAL).equals(type)) {
-				return SqlType.valueOfId(SqlType.SQL_TYPE_ID_INTEGER);
-			} else if (SqlType.valueOfId(SqlType.SQL_TYPE_ID_BIG_SERIAL)
+			if (SqlType.valueOfId(SqlType.SQL_TYPE_ID_SERIAL, this.word.getDatabase(), this.word.getCustomTypes()).equals(type)) {
+				return SqlType.valueOfId(SqlType.SQL_TYPE_ID_INTEGER, this.word.getDatabase(), this.word.getCustomTypes());
+			} else if (SqlType.valueOfId(SqlType.SQL_TYPE_ID_BIG_SERIAL, this.word.getDatabase(), this.word.getCustomTypes())
 					.equals(type)) {
-				return SqlType.valueOfId(SqlType.SQL_TYPE_ID_BIG_INT);
+				return SqlType.valueOfId(SqlType.SQL_TYPE_ID_BIG_INT, this.word.getDatabase(), this.word.getCustomTypes());
 			}
 
 			return type;
 		}
 
 		return word.getType();
+	}
+
+	public void setType(SqlType sqlType, ERDiagram diagram) {
+		if (this.getFirstReferencedColumn() != null) {
+			this.getFirstReferencedColumn().setType(sqlType, diagram);
+			return;
+		}
+		word.setType(sqlType, word.getTypeData(), diagram.getDatabase(), diagram.getCustomTypes());
 	}
 
 	public TypeData getTypeData() {

@@ -64,8 +64,7 @@ public class PostgresTableImportManager extends ImportFromDBManagerEclipseBase {
 			columnData.type = restrictType;
 			columnData.decimalDegits = 0;
 		}
-
-		SqlType sqlType = SqlType.valueOfId(columnData.type);
+		SqlType sqlType = SqlType.valueOfId(columnData.type, this.diagram.getDatabase(), this.diagram.getCustomTypes());
 
 		if (sqlType != null && sqlType.doesNeedArgs()) {
 			String restrictType = this.getFormatType(tableName, schema, columnData);

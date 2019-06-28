@@ -259,8 +259,9 @@ public abstract class AbstractColumnDialog extends AbstractWordDialog {
 		}
 
 		String database = this.diagram.getDatabase();
+		String[] customTypes = this.diagram.getCustomTypes();
 
-		SqlType selectedType = SqlType.valueOf(database, typeCombo.getText());
+		SqlType selectedType = SqlType.valueOf(database, this.diagram.getCustomTypes(),typeCombo.getText());
 
 		TypeData typeData = new TypeData(length, decimal, array,
 				arrayDimension, unsigned, zerofill, binary, args, charSemantics);
@@ -279,11 +280,11 @@ public abstract class AbstractColumnDialog extends AbstractWordDialog {
 			}
 			word.setDescription(description);
 
-			word.setType(selectedType, typeData, database);
+			word.setType(selectedType, typeData, database, this.diagram.getCustomTypes());
 
 		} else {
 			word = new CopyWord(new Word(physicalName, logicalName,
-					selectedType, typeData, description, database));
+					selectedType, typeData, description, database, customTypes));
 		}
 
 		this.returnWord = word;

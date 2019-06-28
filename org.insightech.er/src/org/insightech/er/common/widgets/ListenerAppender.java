@@ -21,6 +21,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TabFolder;
@@ -139,6 +141,44 @@ public class ListenerAppender {
 		});
 	}
 
+	public static void addFocusListener(final Control control, final boolean imeOn) {
+		control.addFocusListener(new FocusAdapter() {
+
+			/**
+			 * {@inheritDoc}
+			 */
+			@Override
+			public void focusGained(FocusEvent e) {
+				ERDiagram diagram = (ERDiagram) PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage()
+						.getActiveEditor().getAdapter(ERDiagram.class);
+
+				if (diagram != null) {
+					if (diagram.getDiagramContents().getSettings()
+							.isAutoImeChange()) {
+						if (imeOn) {
+							control.getShell().setImeInputMode(
+									SWT.DBCS | SWT.NATIVE);
+
+						} else {
+							control.getShell().setImeInputMode(SWT.ALPHA);
+						}
+					}
+				}
+
+				super.focusGained(e);
+			}
+
+			/**
+			 * {@inheritDoc}
+			 */
+			@Override
+			public void focusLost(FocusEvent e) {
+				super.focusLost(e);
+			}
+		});
+	}
+
 	public static void addTraverseListener(final Text textArea) {
 		textArea.addTraverseListener(new TraverseListener() {
 			public void keyTraversed(TraverseEvent e) {
@@ -173,6 +213,19 @@ public class ListenerAppender {
 		}
 	}
 
+	public static void addListListener(final org.eclipse.swt.widgets.List list,
+			final AbstractDialog dialog, final boolean imeOn) {
+		addFocusListener(list, imeOn);
+
+		if (dialog != null) {
+			list.addListener(SWT.Selection, new Listener() {
+
+				public void handleEvent(Event arg0) {
+					dialog.validate();
+				}
+			});
+		}
+	}
 	public static void addCheckBoxListener(final Button button,
 			final AbstractDialog dialog) {
 		button.addSelectionListener(new SelectionListener() {

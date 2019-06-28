@@ -28,12 +28,18 @@ public class Word extends AbstractModel implements ObjectModel,
 
 	private String description;
 
+	private String database;
+
+	private String[] customTypes;
+
 	public Word(String physicalName, String logicalName, SqlType type,
-			TypeData typeData, String description, String database) {
+			TypeData typeData, String description, String database, String[] customTypes) {
 		this.physicalName = physicalName;
 		this.logicalName = logicalName;
-		this.setType(type, typeData, database);
+		this.setType(type, typeData, database, customTypes);
 		this.description = description;
+		this.database = database;
+		this.customTypes = customTypes;
 	}
 
 	public Word(Word word) {
@@ -42,6 +48,16 @@ public class Word extends AbstractModel implements ObjectModel,
 		this.type = word.type;
 		this.typeData = word.typeData.clone();
 		this.description = word.description;
+		this.database = word.database;
+		this.customTypes = word.customTypes;
+	}
+
+	public String getDatabase() {
+		return database;
+	}
+
+	public String[] getCustomTypes() {
+		return customTypes;
 	}
 
 	public String getLogicalName() {
@@ -64,11 +80,11 @@ public class Word extends AbstractModel implements ObjectModel,
 		this.physicalName = physicalName;
 	}
 
-	public void setType(SqlType type, TypeData typeData, String database) {
+	public void setType(SqlType type, TypeData typeData, String database, String[] customTypes) {
 		this.type = type;
 		this.typeData = typeData.clone();
 
-		if (type != null && type.isNeedLength(database)) {
+		if (type != null && type.isNeedLength(database, customTypes)) {
 			if (this.typeData.getLength() == null) {
 				this.typeData.setLength(0);
 			}
@@ -76,7 +92,7 @@ public class Word extends AbstractModel implements ObjectModel,
 			this.typeData.setLength(null);
 		}
 
-		if (type != null && type.isNeedDecimal(database)) {
+		if (type != null && type.isNeedDecimal(database, customTypes)) {
 			if (this.typeData.getDecimal() == null) {
 				this.typeData.setDecimal(0);
 			}

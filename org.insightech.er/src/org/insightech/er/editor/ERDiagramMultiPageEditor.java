@@ -161,7 +161,7 @@ public class ERDiagramMultiPageEditor extends MultiPageEditorPart {
 		}
 
 		if (this.diagram == null) {
-			this.diagram = new ERDiagram(DBManagerFactory.getAllDBList().get(0));
+			this.diagram = new ERDiagram(DBManagerFactory.getAllDBList().get(0),null);
 			this.diagram.init();
 		}
 
@@ -586,7 +586,7 @@ public class ERDiagramMultiPageEditor extends MultiPageEditorPart {
 
 			@Override
 			public void mouseDoubleClick(MouseEvent mouseevent) {
-				
+
 				Category category = getPageCategory(getActivePage());
 
 				if (category != null) {

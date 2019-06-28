@@ -97,7 +97,7 @@ public class MySQLDDLCreator extends DDLCreator {
 				}
 
 				ddl.append("UNIQUE (");
-				ddl.append(filterName(column.getPhysicalName()));				
+				ddl.append(filterName(column.getPhysicalName()));
 				ddl.append(")");
 			}
 		}
@@ -128,7 +128,7 @@ public class MySQLDDLCreator extends DDLCreator {
 
 		ddl.append(filter(Format.formatType(normalColumn.getType(),
 				normalColumn.getTypeData(), this.getDiagram().getDatabase(),
-				true)));
+				this.getDiagram().getCustomTypes(), true)));
 
 		if (normalColumn.getTypeData().isBinary()) {
 			ddl.append(" BINARY");
@@ -385,7 +385,7 @@ public class MySQLDDLCreator extends DDLCreator {
 		SqlType type = primaryKey.getType();
 
 		if (type != null && type.isFullTextIndexable()
-				&& !type.isNeedLength(this.getDiagram().getDatabase())) {
+				&& !type.isNeedLength(this.getDiagram().getDatabase(), this.getDiagram().getCustomTypes())) {
 			Integer length = null;
 
 			MySQLTableProperties tableProperties = (MySQLTableProperties) table

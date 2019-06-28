@@ -84,8 +84,8 @@ public class NewDiagramWizardPage1 extends WizardNewFileCreationPage {
 		return valid;
 	}
 
-	public void createERDiagram(String database) {
-		this.diagram = new ERDiagram(database);
+	public void createERDiagram(String database, String[] customTypes) {
+		this.diagram = new ERDiagram(database, customTypes);
 		this.diagram.init();
 	}
 

@@ -225,7 +225,7 @@ public abstract class AbstractSheetGenerator {
 			} else {
 				obj = Format.formatType(normalColumn.getType(), normalColumn
 						.getTypeData(), tableView.getDiagram().getDatabase(),
-						false);
+						tableView.getDiagram().getCustomTypes(), false);
 			}
 		} else if (KEYWORD_TYPE_EMBEDDED.equals(keyword)) {
 			if (normalColumn.getType() == null) {
@@ -233,7 +233,7 @@ public abstract class AbstractSheetGenerator {
 			} else {
 				obj = Format.formatType(normalColumn.getType(), normalColumn
 						.getTypeData(), tableView.getDiagram().getDatabase(),
-						true);
+						tableView.getDiagram().getCustomTypes(), true);
 			}
 		} else if (KEYWORD_LENGTH.equals(keyword)) {
 			obj = normalColumn.getTypeData().getLength();

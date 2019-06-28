@@ -15,7 +15,7 @@ public class NoColumnTypeRule extends ColumnRule {
 	@Override
 	public boolean validate(ERTable table, NormalColumn column) {
 		if (column.getType() == null
-				|| column.getType().getAlias(table.getDiagram().getDatabase()) == null) {
+				|| column.getType().getAlias(table.getDiagram().getDatabase(), table.getDiagram().getCustomTypes()) == null) {
 			ValidateResult validateResult = new ValidateResult();
 			validateResult
 					.setMessage(ResourceString

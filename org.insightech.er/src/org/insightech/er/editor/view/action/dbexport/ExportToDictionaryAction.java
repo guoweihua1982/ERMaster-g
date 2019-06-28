@@ -58,6 +58,7 @@ public class ExportToDictionaryAction extends AbstractExportAction {
 			writer.crln();
 
 			String database = diagram.getDatabase();
+			String[] customTypes = diagram.getCustomTypes();
 
 			List<Word> list = dictionary.getWordList();
 
@@ -68,7 +69,7 @@ public class ExportToDictionaryAction extends AbstractExportAction {
 				writer.print(word.getLogicalName());
 				if (word.getType() != null) {
 					writer.print(Format.formatType(word.getType(), word
-							.getTypeData(), database, true));
+							.getTypeData(), database, customTypes, true));
 				} else {
 					writer.print("");
 				}

@@ -231,7 +231,7 @@ public class ERTableComposite extends Composite {
 
 	/**
 	 * This method initializes composite2
-	 * 
+	 *
 	 */
 	private void createButton() {
 		Composite buttonComposite = CompositeFactory.createChildComposite(this,
@@ -413,7 +413,7 @@ public class ERTableComposite extends Composite {
 
 			tableItem.setText(4, Format.formatType(sqlType,
 					normalColumn.getTypeData(), this.diagram.getDatabase(),
-					true));
+					this.diagram.getCustomTypes(), true));
 
 			this.setTableEditor(normalColumn, tableItem);
 

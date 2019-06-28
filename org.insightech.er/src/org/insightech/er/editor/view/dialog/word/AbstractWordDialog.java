@@ -225,15 +225,16 @@ public abstract class AbstractWordDialog extends AbstractDialog {
 
 		if (sqlType != null) {
 			String database = this.diagram.getDatabase();
+			String[] customTypes = this.diagram.getCustomTypes();
 
-			if (sqlType.getAlias(database) != null) {
-				this.typeCombo.setText(sqlType.getAlias(database));
+			if (sqlType.getAlias(database, customTypes) != null) {
+				this.typeCombo.setText(sqlType.getAlias(database, customTypes));
 			}
 
-			if (!sqlType.isNeedLength(database)) {
+			if (!sqlType.isNeedLength(database, customTypes)) {
 				this.lengthText.setEnabled(false);
 			}
-			if (!sqlType.isNeedDecimal(database)) {
+			if (!sqlType.isNeedDecimal(database, customTypes)) {
 				this.decimalText.setEnabled(false);
 			}
 
@@ -311,8 +312,9 @@ public abstract class AbstractWordDialog extends AbstractDialog {
 
 	protected SqlType getSelectedType() {
 		String database = this.diagram.getDatabase();
+		String[] customTypes = this.diagram.getCustomTypes();
 
-		SqlType selectedType = SqlType.valueOf(database,
+		SqlType selectedType = SqlType.valueOf(database, customTypes,
 				this.typeCombo.getText());
 
 		return selectedType;
@@ -320,18 +322,19 @@ public abstract class AbstractWordDialog extends AbstractDialog {
 
 	protected void setEnabledBySqlType() {
 		String database = this.diagram.getDatabase();
+		String[] customTypes = this.diagram.getCustomTypes();
 
-		SqlType selectedType = SqlType.valueOf(database,
+		SqlType selectedType = SqlType.valueOf(database, customTypes,
 				this.typeCombo.getText());
 
 		if (selectedType != null) {
-			if (!selectedType.isNeedLength(database)) {
+			if (!selectedType.isNeedLength(database, customTypes)) {
 				this.lengthText.setEnabled(false);
 			} else {
 				this.lengthText.setEnabled(true);
 			}
 
-			if (!selectedType.isNeedDecimal(database)) {
+			if (!selectedType.isNeedDecimal(database, customTypes)) {
 				this.decimalText.setEnabled(false);
 			} else {
 				this.decimalText.setEnabled(true);
@@ -453,8 +456,9 @@ public abstract class AbstractWordDialog extends AbstractDialog {
 		this.typeCombo.add("");
 
 		String database = this.diagram.getDatabase();
+		String[] customTypes = this.diagram.getCustomTypes();
 
-		for (String alias : SqlType.getAliasList(database)) {
+		for (String alias : SqlType.getAliasList(database, customTypes)) {
 			this.typeCombo.add(alias);
 		}
 	}
@@ -538,7 +542,7 @@ public abstract class AbstractWordDialog extends AbstractDialog {
 			}
 		}
 
-		SqlType selectedType = SqlType.valueOf(diagram.getDatabase(),
+		SqlType selectedType = SqlType.valueOf(diagram.getDatabase(), diagram.getCustomTypes(),
 				typeCombo.getText());
 
 		if (selectedType != null && this.argsText != null) {

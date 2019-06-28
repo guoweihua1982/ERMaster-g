@@ -28,6 +28,12 @@
             name="%plugin.name"/>
       <page
             category="org.insightech.er.page"
+            class="org.insightech.er.preference.page.type.TypePreferencePage"
+            id="org.insightech.er.page.type"
+            name="%preference.type">
+      </page>
+      <page
+            category="org.insightech.er.page"
             class="org.insightech.er.preference.page.template.TemplatePreferencePage"
             id="org.insightech.er.page.template"
             name="%preference.template">
@@ -62,7 +68,7 @@
             name="%plugin.name">
       </editor>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.editors">
       <editor
@@ -75,39 +81,39 @@
    </extension>
 
 	<extension point="org.eclipse.ant.core.antTasks">
-	
+
 		<antTask name="ermaster.ddl"
 			class="org.insightech.er.ant_task.impl.DDLAntTask"
 			library="lib/ermaster_ant.jar"
 			headless="true"
 			eclipseRuntime="true" />
-			
+
 		<antTask name="ermaster.image"
 			class="org.insightech.er.ant_task.impl.ImageAntTask"
 			library="lib/ermaster_ant.jar"
 			headless="true"
 			eclipseRuntime="true" />
-			
+
 		<antTask name="ermaster.reportHtml"
 			class="org.insightech.er.ant_task.impl.HtmlReportAntTask"
 			library="lib/ermaster_ant.jar"
 			headless="true"
 			eclipseRuntime="true" />
-		
+
 		<antTask name="ermaster.reportExcel"
 			class="org.insightech.er.ant_task.impl.ExcelReportAntTask"
 			library="lib/ermaster_ant.jar"
 			headless="true"
 			eclipseRuntime="true" />
-			
+
 		<antTask name="ermaster.testdata"
 			class="org.insightech.er.ant_task.impl.TestDataAntTask"
 			library="lib/ermaster_ant.jar"
 			headless="true"
 			eclipseRuntime="true" />
-			
+
 	</extension>
-	
-	
-	
+
+
+
 </plugin>

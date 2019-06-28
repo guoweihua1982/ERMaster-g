@@ -49,7 +49,7 @@ public class WordHtmlReportPageGenerator extends
 		String type = "";
 		if (word.getType() != null) {
 			type = Format.formatType(word.getType(), word.getTypeData(),
-					diagram.getDatabase(), true);
+					diagram.getDatabase(), diagram.getCustomTypes(), true);
 		}
 
 		String description = word.getDescription();

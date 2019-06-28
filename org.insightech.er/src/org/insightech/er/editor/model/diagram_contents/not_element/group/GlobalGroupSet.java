@@ -49,8 +49,8 @@ public class GlobalGroupSet {
 						String physicalName = columnSection
 								.get("physical_name");
 						String logicalName = columnSection.get("logical_name");
-						SqlType sqlType = SqlType.valueOfId(columnSection
-								.get("type"));
+						// TODO kaku:Support custom types in group
+						SqlType sqlType = SqlType.valueOfId(columnSection.get("type"));
 						String defaultValue = columnSection
 								.get("default_value");
 						String description = columnSection.get("description");
@@ -81,8 +81,9 @@ public class GlobalGroupSet {
 								array, arrayDimension, unsigned, zerofill,
 								binary, args, charSemantics);
 
+						// TODO kaku:Support custom types in group
 						Word word = new Word(physicalName, logicalName,
-								sqlType, typeData, description, database);
+								sqlType, typeData, description, database,null);
 						word = dictionary.getUniqueWord(word, true);
 
 						NormalColumn column = new NormalColumn(word, notNull,

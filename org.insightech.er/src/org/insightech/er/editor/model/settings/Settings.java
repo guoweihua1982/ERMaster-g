@@ -57,6 +57,8 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 
 	private String database;
 
+	private String[] customTypes;
+
 	private String notation;
 
 	private int notationLevel;
@@ -142,6 +144,14 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 
 	public void setDatabase(String database) {
 		this.database = database;
+	}
+
+	public String[] getCustomTypes() {
+		return customTypes;
+	}
+
+	public void setCustomTypes(String[] customTypes) {
+		this.customTypes = customTypes;
 	}
 
 	public TableViewProperties getTableViewProperties() {
@@ -265,7 +275,7 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 
 	/**
 	 * translationSettings ���擾���܂�.
-	 * 
+	 *
 	 * @return translationSettings
 	 */
 	public TranslationSetting getTranslationSetting() {
@@ -274,7 +284,7 @@ public class Settings implements Serializable, Cloneable, TablePropertiesHolder 
 
 	/**
 	 * environmentSetting ���擾���܂�.
-	 * 
+	 *
 	 * @return environmentSetting
 	 */
 	public EnvironmentSetting getEnvironmentSetting() {

@@ -91,14 +91,14 @@ public class QuickAddDialog extends AbstractDialog {
 			} catch (NumberFormatException e) {
 			}
 
-			SqlType sqlType = SqlType.valueOf(this.diagram.getDatabase(), type,
+			SqlType sqlType = SqlType.valueOf(this.diagram.getDatabase(), this.diagram.getCustomTypes(),type,
 					length, decimal);
 
 			TypeData typeData = new TypeData(length, decimal, false, null,
 					false, false, false, null, false);
 
 			Word word = new CopyWord(new Word(physicalName, logicalName,
-					sqlType, typeData, null, this.diagram.getDatabase()));
+					sqlType, typeData, null, this.diagram.getDatabase(), this.diagram.getCustomTypes()));
 
 			NormalColumn column = new NormalColumn(word, false, false, false,
 					false, null, null, null, null, null);

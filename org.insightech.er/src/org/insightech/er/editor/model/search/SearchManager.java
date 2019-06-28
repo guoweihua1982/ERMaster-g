@@ -689,13 +689,13 @@ public class SearchManager {
 			}
 		}
 		if (word.getType() != null
-				&& word.getType().getAlias(this.diagram.getDatabase()) != null) {
+				&& word.getType().getAlias(this.diagram.getDatabase(), this.diagram.getCustomTypes()) != null) {
 			if (this.wordTypeCheckBox) {
 				if (this.search(word.getType().getAlias(
-						this.diagram.getDatabase()), keyword)) {
+						this.diagram.getDatabase(), this.diagram.getCustomTypes()), keyword)) {
 					rows.add(new SearchResultRow(
 							SearchResultRow.TYPE_WORD_TYPE, word.getType()
-									.getAlias(this.diagram.getDatabase()),
+									.getAlias(this.diagram.getDatabase(), this.diagram.getCustomTypes()),
 							path, word, null));
 				}
 			}

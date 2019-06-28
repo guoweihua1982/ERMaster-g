@@ -29,7 +29,7 @@ public class TestDataEditTest {
 	}
 
 	private void initialize(Composite parent) {
-		ERDiagram diagram = new ERDiagram(MySQLDBManager.ID);
+		ERDiagram diagram = new ERDiagram(MySQLDBManager.ID,null);
 		ERTable table = new ERTable();
 		table.setPhysicalName("table1");
 		table.setLogicalName("table1");
@@ -37,13 +37,13 @@ public class TestDataEditTest {
 				false, null, false);
 
 		Word word1 = new Word("a", "a", SqlType.valueOfId("bigint"), typeData,
-				null, MySQLDBManager.ID);
+				null, MySQLDBManager.ID, null);
 
 		NormalColumn column1 = new NormalColumn(word1, true, true, true, true,
 				null, null, null, null, null);
 
 		Word word2 = new Word("a", "a", SqlType.valueOfId("bigint"), typeData,
-				null, MySQLDBManager.ID);
+				null, MySQLDBManager.ID, null);
 		NormalColumn column2 = new NormalColumn(word2, true, true, true, true,
 				null, null, null, null, null);
 		table.addColumn(column1);

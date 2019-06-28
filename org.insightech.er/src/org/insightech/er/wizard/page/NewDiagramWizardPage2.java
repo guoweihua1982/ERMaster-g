@@ -10,12 +10,16 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.insightech.er.ResourceString;
 import org.insightech.er.db.DBManagerFactory;
+import org.insightech.er.preference.PreferenceInitializer;
 
 public class NewDiagramWizardPage2 extends WizardPage {
 
 	private Combo databaseCombo;
+
+	private List customTypeList;
 
 	public NewDiagramWizardPage2(IStructuredSelection selection) {
 		super(ResourceString.getResourceString("wizard.new.diagram.title"));
@@ -51,6 +55,22 @@ public class NewDiagramWizardPage2 extends WizardPage {
 
 		this.databaseCombo.setFocus();
 
+		Label customTypeLabel = new Label(composite, SWT.NONE);
+		GridData labelGridData = new GridData();
+		labelGridData.verticalAlignment = SWT.TOP;
+		labelGridData.horizontalAlignment = SWT.LEFT;
+		customTypeLabel.setLayoutData(labelGridData);
+		customTypeLabel.setText(ResourceString.getResourceString("label.custom.type"));
+		this.customTypeList = new List(composite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		GridData typeData = new GridData(GridData.FILL_HORIZONTAL);
+		typeData.widthHint = 200;
+		typeData.heightHint = 10 * this.customTypeList.getItemHeight();
+		this.customTypeList.setLayoutData(typeData);
+
+		for (String type:PreferenceInitializer.getAllExcelTypeFiles()) {
+			this.customTypeList.add(type);
+		}
+
 		this.validatePage();
 
 		this.setControl(composite);
@@ -79,5 +99,9 @@ public class NewDiagramWizardPage2 extends WizardPage {
 
 	public String getDatabase() {
 		return this.databaseCombo.getText();
+	}
+
+	public String[] getCustomTypes() {
+		return this.customTypeList.getSelection();
 	}
 }

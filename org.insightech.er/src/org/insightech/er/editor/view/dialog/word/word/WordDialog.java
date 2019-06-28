@@ -98,8 +98,9 @@ public class WordDialog extends AbstractWordDialog {
 		text = physicalNameText.getText();
 
 		String database = this.diagram.getDatabase();
+		String[] customTypes = this.diagram.getCustomTypes();
 
-		SqlType selectedType = SqlType.valueOf(database, typeCombo.getText());
+		SqlType selectedType = SqlType.valueOf(database, customTypes, typeCombo.getText());
 
 		String args = null;
 		if (this.argsText != null) {
@@ -111,7 +112,7 @@ public class WordDialog extends AbstractWordDialog {
 
 		this.returnWord = new Word(physicalNameText.getText(),
 				logicalNameText.getText(), selectedType, typeData,
-				descriptionText.getText(), database);
+				descriptionText.getText(), database, customTypes);
 	}
 
 	public Word getWord() {

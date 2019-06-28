@@ -51,7 +51,7 @@ public class ReplaceManager {
 	private static final List<String> replaceWordList = new ArrayList<String>();
 
 	public static ReplaceResult replace(int type, Object object,
-			String keyword, String replaceWord, String database) {
+			String keyword, String replaceWord, String database, String[] customTypes) {
 
 		addReplaceWord(replaceWord);
 
@@ -287,7 +287,7 @@ public class ReplaceManager {
 					oldTypeData.isZerofill(), oldTypeData.isBinary(),
 					oldTypeData.getArgs(), oldTypeData.isCharSemantics());
 
-			word.setType(word.getType(), newTypeData, database);
+			word.setType(word.getType(), newTypeData, database, customTypes);
 
 			return new ReplaceResult(oldTypeData);
 
@@ -314,23 +314,23 @@ public class ReplaceManager {
 					oldTypeData.isZerofill(), oldTypeData.isBinary(),
 					oldTypeData.getArgs(), oldTypeData.isCharSemantics());
 
-			word.setType(word.getType(), newTypeData, database);
+			word.setType(word.getType(), newTypeData, database, customTypes);
 
 			return new ReplaceResult(oldTypeData);
 
 		} else if (type == SearchResultRow.TYPE_WORD_TYPE) {
 			Word word = (Word) object;
-			String original = String.valueOf(word.getType().getAlias(database));
+			String original = String.valueOf(word.getType().getAlias(database, customTypes));
 
 			String str = replace(original, keyword, replaceWord);
 
-			SqlType newSqlType = SqlType.valueOf(database, str);
+			SqlType newSqlType = SqlType.valueOf(database, customTypes, str);
 
 			if (Check.isEmpty(str)) {
 				newSqlType = null;
 
 			} else {
-				newSqlType = SqlType.valueOf(database, str);
+				newSqlType = SqlType.valueOf(database, customTypes, str);
 				if (newSqlType == null) {
 					return null;
 				}
@@ -339,7 +339,7 @@ public class ReplaceManager {
 			SqlType oldSqlType = word.getType();
 			TypeData oldTypeData = word.getTypeData();
 
-			word.setType(newSqlType, word.getTypeData(), database);
+			word.setType(newSqlType, word.getTypeData(), database, customTypes);
 
 			return new ReplaceResult(new Object[] { oldSqlType, oldTypeData });
 
@@ -432,7 +432,7 @@ public class ReplaceManager {
 	}
 
 	public static void undo(int type, Object object, Object original,
-			String database) {
+			String database, String[] customTypes) {
 
 		if (type == SearchResultRow.TYPE_RELATION_NAME) {
 			Relation relation = (Relation) object;
@@ -494,17 +494,17 @@ public class ReplaceManager {
 
 		} else if (type == SearchResultRow.TYPE_WORD_DECIMAL) {
 			Word word = (Word) object;
-			word.setType(word.getType(), (TypeData) original, database);
+			word.setType(word.getType(), (TypeData) original, database, customTypes);
 
 		} else if (type == SearchResultRow.TYPE_WORD_LENGTH) {
 			Word word = (Word) object;
-			word.setType(word.getType(), (TypeData) original, database);
+			word.setType(word.getType(), (TypeData) original, database, customTypes);
 
 		} else if (type == SearchResultRow.TYPE_WORD_TYPE) {
 			Word word = (Word) object;
 			Object[] originals = (Object[]) original;
 			word.setType((SqlType) originals[0], (TypeData) originals[1],
-					database);
+					database, customTypes);
 
 		} else if (type == SearchResultRow.TYPE_WORD_LOGICAL_NAME) {
 			Word word = (Word) object;

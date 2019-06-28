@@ -8,6 +8,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
+import org.insightech.er.db.sqltype.SqlType;
 import org.insightech.er.editor.controller.editpart.element.node.TableViewEditPart;
 import org.insightech.er.editor.model.ERDiagram;
 import org.insightech.er.editor.model.diagram_contents.element.connection.ConnectionElement;
@@ -97,8 +98,12 @@ public class NormalColumnEditPart extends ColumnEditPart {
 		int notationLevel = diagram.getDiagramContents().getSettings()
 				.getNotationLevel();
 
-		String type = diagram.filter(Format.formatType(normalColumn.getType(),
-				normalColumn.getTypeData(), diagram.getDatabase(), true));
+		String database = diagram.getDatabase();
+		String[] customTypes = diagram.getCustomTypes();
+		SqlType sqlType = normalColumn.getType();
+
+		String type = diagram.filter(Format.formatType(sqlType,
+				normalColumn.getTypeData(), database, customTypes, true));
 
 		boolean displayKey = true;
 		if (notationLevel == Settings.NOTATION_LEVLE_COLUMN) {

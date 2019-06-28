@@ -28,8 +28,8 @@ public class NewDiagramWizard extends Wizard implements INewWizard {
 	public boolean performFinish() {
 		try {
 			String database = this.page2.getDatabase();
-
-			this.page1.createERDiagram(database);
+			String[] customTypes = this.page2.getCustomTypes();
+			this.page1.createERDiagram(database,customTypes);
 
 			IFile file = this.page1.createNewFile();
 

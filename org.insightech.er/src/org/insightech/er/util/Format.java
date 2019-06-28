@@ -8,11 +8,11 @@ import org.insightech.er.editor.model.diagram_contents.not_element.dictionary.Ty
 public class Format {
 
 	public static String formatType(SqlType sqlType, TypeData typeData,
-			String database, boolean embedded) {
+			String database, String[] customTypes, boolean embedded) {
 		String type = null;
 
 		if (sqlType != null) {
-			type = sqlType.getAlias(database);
+			type = sqlType.getAlias(database, customTypes);
 			if (type != null) {
 				if (embedded) {
 					if (typeData.getLength() != null
@@ -34,14 +34,14 @@ public class Format {
 							len = getFileSizeStr(typeData.getLength()
 									.longValue());
 						} else {
-							len = String.valueOf(typeData.getLength());							
+							len = String.valueOf(typeData.getLength());
 						}
 
 						type = type.replaceAll("\\(.\\)", "(" + len + ")");
 
 					}
 				}
-				
+
 				if (sqlType.isNeedCharSemantics(database) && typeData.isCharSemantics()) {
 					type = type.replaceAll("\\)", " char)");
 				}
