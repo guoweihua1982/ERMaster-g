@@ -2,7 +2,7 @@
 
 ## ERMaster-gとは
 
-[ERMaster](http://ermaster.sourceforge.net/index_ja.html)のrev.124をフォークして、新しい機能を追加して、Bugを修正したEclipse Pluginです。
+[ERMaster](http://ermaster.sourceforge.net/index_ja.html)の[rev.124](https://sourceforge.net/p/ermaster/svn/124/)をフォークして、新しい機能を追加して、Bugを修正したEclipse Pluginです。
 
 追加した機能は次のとおりです。
 
