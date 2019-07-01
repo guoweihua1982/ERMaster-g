@@ -505,7 +505,7 @@ public class XMLLoader {
 		if (customTypeElement != null) {
 			return this.getTagValues(customTypeElement, "type");
 		}
-		return null;
+		return new String[0];
 	}
 
 	private void loadDiagramContents(DiagramContents diagramContents,

@@ -80,9 +80,9 @@ public class TableSet extends AbstractModel implements ObjectListModel,
 			for (NormalColumn column : table.getNormalColumns()) {
 				SqlType sqlType = column.getType();
 
-				if (SqlType.valueOfId(SqlType.SQL_TYPE_ID_SERIAL, database, customTypes).equals(
+				if (SqlType.valueOfId(SqlType.SQL_TYPE_ID_SERIAL).equals(
 						sqlType)
-						|| SqlType.valueOfId(SqlType.SQL_TYPE_ID_BIG_SERIAL, database, customTypes)
+						|| SqlType.valueOfId(SqlType.SQL_TYPE_ID_BIG_SERIAL)
 								.equals(sqlType)) {
 					autoSequenceNames
 							.add((prefix + column.getPhysicalName() + "_seq")
