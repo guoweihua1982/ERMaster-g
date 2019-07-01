@@ -43,9 +43,12 @@ public class SqlTypeFactory {
 				CustomTypeInfo customTypeInfo = new CustomTypeInfo();
 				customTypeInfoMap.put(typeFile, customTypeInfo);
 
-				InputStream customIn = new FileInputStream(new File(PreferenceInitializer.getTypePath(typeFile)));
-				loadTypeFile(customIn, customTypeInfo.getDbSqlTypeToAliasMap(), customTypeInfo.getDbAliasToSqlTypeMap(),
-						customTypeInfo.getDbSqlTypeMap(), typeFile);
+				File file = new File(PreferenceInitializer.getTypePath(typeFile));
+				if(file.exists()) {
+					InputStream customIn = new FileInputStream(file);
+					loadTypeFile(customIn, customTypeInfo.getDbSqlTypeToAliasMap(), customTypeInfo.getDbAliasToSqlTypeMap(),
+							customTypeInfo.getDbSqlTypeMap(), typeFile);
+				}
 			}
 		}
 	}
