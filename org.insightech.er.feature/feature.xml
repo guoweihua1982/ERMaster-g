@@ -6,12 +6,12 @@
       provider-name="Insightech.org"
       plugin="org.insightech.er">
 
-   <description url="http://ermaster.sourceforge.net">
+   <description url="https://github.com/guoweihua1982/ERMaster-g">
       ERMaster is GUI editor for ER diagram.
 It is operated as Eclipse plug-in.
-Making ER diagram, the print of ER diagram, 
+Making ER diagram, the print of ER diagram,
 and the DDL output from ER diagram, etc. can be done graphical.
-Moreover, import from DB, the group management, 
+Moreover, import from DB, the group management,
 and the historical management, etc. are supported.
    </description>
 
@@ -48,7 +48,7 @@ limitations under the License.
    </license>
 
    <url>
-      <update label="ERMaster" url="http://downloads.sourceforge.net/project/ermaster/ermaster"/>
+      <update label="ERMaster" url="https://guoweihua1982.github.io/ERMaster-g/org.insightech.er.update/site.xml"/>
    </url>
 
    <requires>
