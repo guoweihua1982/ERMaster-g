@@ -2,6 +2,7 @@ package org.insightech.er.editor;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -68,6 +69,7 @@ import org.insightech.er.editor.view.outline.ERDiagramOutlinePage;
 import org.insightech.er.editor.view.property_source.ERDiagramPropertySourceProvider;
 import org.insightech.er.editor.view.tool.ERDiagramPaletteRoot;
 import org.insightech.er.util.Format;
+import org.insightech.er.util.io.IOUtils;
 
 /**
  * <pre>
@@ -316,6 +318,8 @@ public class ERDiagramMultiPageEditor extends MultiPageEditorPart {
 				} else {
 					this.inputFile.setContents(source, true, false, monitor);
 				}
+			} else if (this.inputFilePath != null) {
+				IOUtils.copy(source, new FileOutputStream(this.inputFilePath));
 			}
 
 		} catch (Exception e) {
