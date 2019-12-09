@@ -3,7 +3,7 @@
    <description url="https://github.com/guoweihua1982/ERMaster-g">
       update-site at github.io
    </description>
-   <feature url="features/org.insightech.er.feature_1.0.0.v20190703-1200.jar" id="org.insightech.er.feature" version="1.0.0.v20190703-1200">
+   <feature url="features/org.insightech.er.feature_1.0.1.v20191209-1400.jar" id="org.insightech.er.feature" version="1.0.1.v20191209-1400">
       <category name="ermaster"/>
    </feature>
    <category-def name="ermaster" label="ERMaster"/>
