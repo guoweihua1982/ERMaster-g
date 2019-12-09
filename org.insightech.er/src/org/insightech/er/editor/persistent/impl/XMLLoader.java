@@ -1114,6 +1114,8 @@ public class XMLLoader {
 			settings.setSuspendValidator(this.getBooleanValue(element,
 					"suspend_validator", false));
 
+			settings.setCustomTypes(this.loadCustomTypes(element));
+
 			CategorySetting categorySetting = settings.getCategorySetting();
 			this.loadCategorySetting(categorySetting, element, context);
 
